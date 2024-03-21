@@ -29,6 +29,11 @@ body {
   transition: 115ms;
 }
 
+.current-word {
+  transition: all 100ms;
+  scale: 1.05;
+}
+
 .current-letter {
   color: #838383;
 }
@@ -39,11 +44,6 @@ body {
 
 .incorrect {
   color: #ff0000;
-}
-
-.current-word {
-  transition: all 100ms;
-  scale: 1.05;
 }
 
 .word {

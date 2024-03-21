@@ -3,11 +3,8 @@ import { words } from './common.json'
 let currentWord = 0;
 let wordIndex = 0;
 const wordBox = document.getElementById('word-box');
-generateWords();
 
-document.querySelectorAll('.word')[currentWord].classList.add('current-word');
-document.querySelectorAll('.letter')[wordIndex].classList.add('current-letter')
-
+initalise()
 
 document.addEventListener("keydown", e => {
     if (!(e.key == 'Alt' || e.key == 'Control' || e.key == 'Shift')) {
@@ -17,23 +14,8 @@ document.addEventListener("keydown", e => {
 
         letter.classList.remove('current-letter');
 
-        // console.log(wordIndex)
         if (e.key == "Backspace") {
-            if (wordIndex > 0) {
-                word.querySelectorAll('.letter')[wordIndex - 1].classList.remove('correct', 'incorrect');
-                wordIndex--
-
-            } else {
-                if (currentWord > 0) {
-                    currentWord--
-                    wordIndex = document.querySelectorAll('.word')[currentWord].querySelectorAll('.letter').length - 1
-                    document.querySelectorAll('.word')[currentWord].querySelectorAll('.letter')[wordIndex].classList.remove('correct', 'incorrect');
-
-                }
-            }
-            document.querySelectorAll('.word')[currentWord].classList.add('current-word');
-            document.querySelectorAll('.word')[currentWord].querySelectorAll('.letter')[wordIndex].classList.add('current-letter');
-
+            deleteCharacter(word)
         }
         else {
             if (e.key == letter.innerHTML) {
@@ -49,15 +31,7 @@ document.addEventListener("keydown", e => {
             }
 
             if (wordIndex >= wordLength) {
-                word.classList.remove('current-word')
-                wordIndex = 0;
-                currentWord++
-                if (currentWord > document.querySelectorAll('.word').length - 1) {
-                    currentWord = 0
-                    generateWords();
-                }
-                document.querySelectorAll('.word')[currentWord].classList.add('current-word');
-                document.querySelectorAll('.word')[currentWord].querySelectorAll('.letter')[0].classList.add('current-letter');
+                goToNextWord(word)
 
             }
         }
@@ -71,6 +45,13 @@ document.addEventListener("keydown", e => {
 
 })
 
+
+function initalise() {
+    generateWords();
+    document.querySelectorAll('.word')[currentWord].classList.add('current-word');
+    document.querySelectorAll('.letter')[wordIndex].classList.add('current-letter')
+
+}
 
 function generateWords() {
     const MAX_VISIBLE_WORDS = 36;
@@ -87,3 +68,34 @@ function generateWords() {
     }
 
 }
+
+function deleteCharacter(word) {
+    if (wordIndex > 0) {
+        word.querySelectorAll('.letter')[wordIndex - 1].classList.remove('correct', 'incorrect');
+        wordIndex--
+
+    } else {
+        if (currentWord > 0) {
+            currentWord--
+            wordIndex = document.querySelectorAll('.word')[currentWord].querySelectorAll('.letter').length - 1
+            document.querySelectorAll('.word')[currentWord].querySelectorAll('.letter')[wordIndex].classList.remove('correct', 'incorrect');
+
+        }
+    }
+    document.querySelectorAll('.word')[currentWord].classList.add('current-word');
+    document.querySelectorAll('.word')[currentWord].querySelectorAll('.letter')[wordIndex].classList.add('current-letter');
+
+}
+
+function goToNextWord(word) {
+    word.classList.remove('current-word')
+    wordIndex = 0;
+    currentWord++
+    if (currentWord > document.querySelectorAll('.word').length - 1) {
+        currentWord = 0
+        generateWords();
+    }
+    document.querySelectorAll('.word')[currentWord].classList.add('current-word');
+    document.querySelectorAll('.word')[currentWord].querySelectorAll('.letter')[0].classList.add('current-letter');
+}
+
