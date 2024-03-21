@@ -26,11 +26,11 @@ body {
 }
 
 .letter {
-  transition: 150ms;
+  transition: 115ms;
 }
 
 .current-letter {
-  color: #777777;
+  color: #838383;
 }
 
 .correct {
