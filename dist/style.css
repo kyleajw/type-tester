@@ -14,7 +14,7 @@ body {
 
 #navbar {
   display: flex;
-  width: 1%;
+  width: 1.75%;
   overflow-x: hidden;
   flex-direction: column;
   background-color: #181818;
@@ -47,7 +47,7 @@ body {
 }
 
 .menu-marker {
-  height: 2rem;
+  height: 3.5%;
   background-color: #363636;
 }
 
@@ -85,7 +85,28 @@ body {
 
   /* overflow: hidden; */
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+#word-settings {
+  align-self: flex-end;
+  border-bottom: solid 2px #363636;
+}
+
+#restart {
+  border: none;
+  background: none;
+  font-size: 1.5rem;
+  color: #363636;
+  outline: 0;
+  transition: all 100ms;
+}
+
+#restart:hover,
+#restart:focus {
+  color: #ffffff;
 }
 
 #word-box {
