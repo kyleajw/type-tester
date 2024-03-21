@@ -14,15 +14,41 @@ body {
 
 #navbar {
   display: flex;
-
+  width: 1%;
+  overflow-x: hidden;
   flex-direction: column;
-  padding: 10px;
   background-color: #181818;
-  border-right: 2px solid #363636;
+  /* border-right: 2px solid #363636; */
+  transition: all 400ms;
 }
 
-#navbar > ul > li {
+#navbar:hover {
+  width: 15%;
+}
+
+#navbar:hover #menu-items {
+  visibility: visible;
+  left: 0;
+}
+
+#menu-items {
+  display: flex;
+  flex-direction: column;
+  visibility: hidden;
   padding: 10px;
+  transition: all 10ms;
+  position: relative;
+  left: -200px;
+  transition: all 400ms;
+}
+
+#menu-items li {
+  padding: 10px;
+}
+
+.menu-marker {
+  height: 2rem;
+  background-color: #363636;
 }
 
 .letter {
@@ -54,7 +80,7 @@ body {
 
 #content-box {
   height: 80%;
-  width: 50%;
+  width: 60%;
   margin: auto;
 
   /* overflow: hidden; */
@@ -68,4 +94,5 @@ body {
 
   display: flex;
   flex-wrap: wrap;
+  padding: 1rem;
 }
