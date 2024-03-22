@@ -6,6 +6,10 @@ body {
   overflow-x: hidden;
 }
 
+button {
+  font-family: "Fira Code", monospace;
+}
+
 .container {
   display: flex;
   flex-direction: row;
@@ -93,14 +97,23 @@ body {
 #word-settings {
   align-self: flex-end;
   border-bottom: solid 2px #363636;
+  display: flex;
+  align-items: center;
+  font-size: 1.25rem;
+  gap: 5rem;
+}
+
+#auto-space-container label {
+  color: #363636;
 }
 
 #restart {
+  padding: 0;
   border: none;
   background: none;
-  font-size: 1.5rem;
   color: #363636;
   outline: 0;
+  font-size: 1.25rem;
   transition: all 100ms;
 }
 

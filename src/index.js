@@ -4,6 +4,7 @@ let currentWord = 0;
 let wordIndex = 0;
 const wordBox = document.getElementById('word-box');
 const restartBtn = document.getElementById('restart');
+let autoSpaceEnabled = true;
 
 initalise()
 
@@ -11,15 +12,23 @@ restartBtn.addEventListener("click", e => {
     initalise();
 })
 
+
+
 document.addEventListener("keydown", e => {
+
+
     if (!(e.key == 'Alt' || e.key == 'Control' || e.key == 'Shift' || e.key == 'Tab' || e.key == 'Enter')) {
+
         const word = document.querySelectorAll('.word')[currentWord];
         const wordLength = word.querySelectorAll('.letter').length;
         const letter = word.querySelectorAll('.letter')[wordIndex];
 
         letter.classList.remove('current-letter');
 
-        if (e.key == "Backspace") {
+        if (e.key == ' ' && !autoSpaceEnabled) {
+            goToNextWord(word)
+        }
+        else if (e.key == "Backspace") {
             deleteCharacter(word)
         }
         else {
@@ -29,16 +38,26 @@ document.addEventListener("keydown", e => {
                 letter.classList.add('incorrect');
             }
 
-            wordIndex++;
+
+            if (!autoSpaceEnabled) {
+                wordIndex < wordLength - 1 ? wordIndex++ : wordIndex
+
+            } else {
+                wordIndex < wordLength ? wordIndex++ : wordIndex
+
+            }
+
             if (wordIndex < wordLength) {
                 word.querySelectorAll('.letter')[wordIndex].classList.add('current-letter')
-
             }
 
-            if (wordIndex >= wordLength) {
+
+            if (wordIndex >= wordLength && autoSpaceEnabled) {
                 goToNextWord(word)
-
             }
+
+
+
         }
     }
 })
@@ -46,6 +65,7 @@ document.addEventListener("keydown", e => {
 function initalise() {
     currentWord = 0;
     wordIndex = 0;
+    autoSpaceEnabled = document.getElementById('auto-space').checked;
     generateWords();
     document.querySelectorAll('.word')[0].classList.add('current-word');
     document.querySelectorAll('.letter')[0].classList.add('current-letter')
@@ -70,6 +90,7 @@ function deleteCharacter(word) {
         wordIndex--
     } else {
         if (currentWord > 0) {
+            word.classList.remove('current-word')
             currentWord--
             wordIndex = document.querySelectorAll('.word')[currentWord].querySelectorAll('.letter').length - 1
             document.querySelectorAll('.word')[currentWord].querySelectorAll('.letter')[wordIndex].classList.remove('correct', 'incorrect');
