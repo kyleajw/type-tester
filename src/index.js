@@ -8,10 +8,12 @@ const restartBtn = document.getElementById('restart');
 let wordCount = 0;
 let letterCount = 0;
 let wpm = 0;
+let seconds = 60;
 
 const wordCounter = document.getElementById('word-count')
 const letterCounter = document.getElementById('letter-count')
 const wpmCounter = document.getElementById('wpm')
+const secondsDisplay = document.getElementById('seconds')
 
 initalise()
 
