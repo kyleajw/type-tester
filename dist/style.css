@@ -1,5 +1,21 @@
 body {
-  background-color: #101010;
+  background: #101010;
+  background: -moz-radial-gradient(
+    circle,
+    rgba(22, 22, 22, 1) 0%,
+    rgba(16, 16, 16, 1) 100%
+  );
+  background: -webkit-radial-gradient(
+    circle,
+    rgba(22, 22, 22, 1) 0%,
+    rgba(16, 16, 16, 1) 100%
+  );
+  background: radial-gradient(
+    circle,
+    rgba(22, 22, 22, 1) 0%,
+    rgba(16, 16, 16, 1) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#161616",endColorstr="#101010",GradientType=1);
   color: #ffffff;
   font-family: "Fira Code", monospace;
   height: 100vh;
@@ -22,7 +38,7 @@ button {
   overflow-x: hidden;
   flex-direction: column;
   background-color: #181818;
-  /* border-right: 2px solid #363636; */
+
   transition: all 400ms;
 }
 
@@ -48,6 +64,17 @@ button {
 
 #menu-items li {
   padding: 10px;
+}
+
+#information {
+  display: flex;
+  gap: 10px;
+}
+
+#information div {
+  padding: 0.25rem 0.5rem;
+  border-radius: 2px;
+  border: 2px solid #363636;
 }
 
 .menu-marker {

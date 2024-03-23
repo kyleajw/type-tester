@@ -4,7 +4,14 @@ let currentWord = 0;
 let wordIndex = 0;
 const wordBox = document.getElementById('word-box');
 const restartBtn = document.getElementById('restart');
-let autoSpaceEnabled = true;
+
+let wordCount = 0;
+let letterCount = 0;
+let wpm = 0;
+
+const wordCounter = document.getElementById('word-count')
+const letterCounter = document.getElementById('letter-count')
+const wpmCounter = document.getElementById('wpm')
 
 initalise()
 
@@ -25,13 +32,12 @@ document.addEventListener("keydown", e => {
 
         letter.classList.remove('current-letter');
 
-        if (e.key == ' ' && !autoSpaceEnabled) {
-            goToNextWord(word)
-        }
-        else if (e.key == "Backspace") {
+
+        if (e.key == "Backspace") {
             deleteCharacter(word)
         }
         else {
+            letterCount++;
             if (e.key == letter.innerHTML) {
                 letter.classList.add('correct');
             } else {
@@ -39,36 +45,37 @@ document.addEventListener("keydown", e => {
             }
 
 
-            if (!autoSpaceEnabled) {
-                wordIndex < wordLength - 1 ? wordIndex++ : wordIndex
-
-            } else {
-                wordIndex < wordLength ? wordIndex++ : wordIndex
-
-            }
+            wordIndex++
 
             if (wordIndex < wordLength) {
                 word.querySelectorAll('.letter')[wordIndex].classList.add('current-letter')
             }
 
 
-            if (wordIndex >= wordLength && autoSpaceEnabled) {
+            if (wordIndex >= wordLength) {
+                wordCount++
+                wordCounter.textContent = wordCount;
                 goToNextWord(word)
             }
 
 
 
         }
+        letterCounter.textContent = letterCount;
+
     }
 })
 
 function initalise() {
     currentWord = 0;
     wordIndex = 0;
-    autoSpaceEnabled = document.getElementById('auto-space').checked;
+    letterCount = 0;
+    wordCount = 0;
     generateWords();
     document.querySelectorAll('.word')[0].classList.add('current-word');
     document.querySelectorAll('.letter')[0].classList.add('current-letter')
+    letterCounter.textContent = 0;
+    wordCounter.textContent = 0;
 }
 
 function generateWords() {
@@ -85,11 +92,17 @@ function generateWords() {
 }
 
 function deleteCharacter(word) {
+    if (wordIndex > 0 || currentWord > 0) {
+        letterCount--;
+    }
     if (wordIndex > 0) {
         word.querySelectorAll('.letter')[wordIndex - 1].classList.remove('correct', 'incorrect');
         wordIndex--
     } else {
         if (currentWord > 0) {
+            wordCount--
+            wordCounter.textContent = wordCount;
+
             word.classList.remove('current-word')
             currentWord--
             wordIndex = document.querySelectorAll('.word')[currentWord].querySelectorAll('.letter').length - 1
