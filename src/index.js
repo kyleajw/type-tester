@@ -7,75 +7,105 @@ const restartBtn = document.getElementById('restart');
 
 let wordCount = 0;
 let letterCount = 0;
-let wpm = 0;
-let seconds = 60;
+let seconds;
+let timeElapsed;
+let started = false;
 
 const wordCounter = document.getElementById('word-count')
 const letterCounter = document.getElementById('letter-count')
 const wpmCounter = document.getElementById('wpm')
 const secondsDisplay = document.getElementById('seconds')
 
+
+let timer;
 initalise()
 
-restartBtn.addEventListener("click", e => {
-    initalise();
-})
+
+
 
 
 
 document.addEventListener("keydown", e => {
 
 
-    if (!(e.key == 'Alt' || e.key == 'Control' || e.key == 'Shift' || e.key == 'Tab' || e.key == 'Enter')) {
+    if (!(e.key == 'Alt' || e.key == 'Control' || e.key == 'Shift' || e.key == 'Tab' || e.key == 'Enter' || e.key == ' ')) {
 
-        const word = document.querySelectorAll('.word')[currentWord];
-        const wordLength = word.querySelectorAll('.letter').length;
-        const letter = word.querySelectorAll('.letter')[wordIndex];
+        if (timeElapsed != 60) {
+            const word = document.querySelectorAll('.word')[currentWord];
+            const wordLength = word.querySelectorAll('.letter').length;
+            const letter = word.querySelectorAll('.letter')[wordIndex];
 
-        letter.classList.remove('current-letter');
+            letter.classList.remove('current-letter');
 
 
-        if (e.key == "Backspace") {
-            deleteCharacter(word)
+            if (e.key == "Backspace") {
+                deleteCharacter(word)
+            }
+
+            else {
+                if (!started) {
+                    started = true;
+                    timer = setInterval(() => {
+
+                        seconds--;
+                        timeElapsed++
+                        secondsDisplay.textContent = seconds;
+                        wpmCounter.textContent = Math.round((letterCount / 5) / (timeElapsed / 60))
+                        if (timeElapsed > 59) {
+                            clearInterval(timer);
+                        }
+
+                    }, 1000)
+
+                }
+                letterCount++;
+                if (e.key == letter.innerHTML) {
+                    letter.classList.add('correct');
+                } else {
+                    letter.classList.add('incorrect');
+                }
+
+
+                wordIndex++
+
+                if (wordIndex < wordLength) {
+                    word.querySelectorAll('.letter')[wordIndex].classList.add('current-letter')
+                }
+
+
+                if (wordIndex >= wordLength) {
+                    wordCount++
+                    wordCounter.textContent = wordCount;
+                    goToNextWord(word)
+                }
+
+
+
+            }
+            letterCounter.textContent = letterCount;
+
         }
-        else {
-            letterCount++;
-            if (e.key == letter.innerHTML) {
-                letter.classList.add('correct');
-            } else {
-                letter.classList.add('incorrect');
-            }
+    }
 
-
-            wordIndex++
-
-            if (wordIndex < wordLength) {
-                word.querySelectorAll('.letter')[wordIndex].classList.add('current-letter')
-            }
-
-
-            if (wordIndex >= wordLength) {
-                wordCount++
-                wordCounter.textContent = wordCount;
-                goToNextWord(word)
-            }
-
-
-
-        }
-        letterCounter.textContent = letterCount;
-
+    if (e.key == " ") {
+        initalise();
     }
 })
 
 function initalise() {
+    clearInterval(timer);
+    wpmCounter.textContent = 0
     currentWord = 0;
     wordIndex = 0;
     letterCount = 0;
     wordCount = 0;
+    seconds = 60;
+    timeElapsed = 0;
+    started = false;
     generateWords();
     document.querySelectorAll('.word')[0].classList.add('current-word');
     document.querySelectorAll('.letter')[0].classList.add('current-letter')
+    secondsDisplay.textContent = seconds;
     letterCounter.textContent = 0;
     wordCounter.textContent = 0;
 }

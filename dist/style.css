@@ -146,7 +146,8 @@ button {
 }
 
 #restart {
-  padding: 0;
+  padding-bottom: 0.25rem;
+
   border: none;
   background: none;
   color: var(--faded-grey);
@@ -155,9 +156,9 @@ button {
   transition: all 100ms;
 }
 
-#restart:hover,
-#restart:focus {
+#restart:hover {
   color: var(--primary-text-color);
+  scale: 1.1;
 }
 
 #word-box {
