@@ -3,7 +3,6 @@ import { words } from './common.json'
 let currentWord = 0;
 let wordIndex = 0;
 const wordBox = document.getElementById('word-box');
-const restartBtn = document.getElementById('restart');
 
 let wordCount = 0;
 let letterCount = 0;
@@ -16,37 +15,23 @@ const letterCounter = document.getElementById('letter-count')
 const wpmCounter = document.getElementById('wpm')
 const secondsDisplay = document.getElementById('seconds')
 
-
 let timer;
 initalise()
 
-
-
-
-
-
 document.addEventListener("keydown", e => {
-
-
     if (!(e.key == 'Alt' || e.key == 'Control' || e.key == 'Shift' || e.key == 'Tab' || e.key == 'Enter' || e.key == ' ')) {
-
         if (timeElapsed != 60) {
             const word = document.querySelectorAll('.word')[currentWord];
             const wordLength = word.querySelectorAll('.letter').length;
             const letter = word.querySelectorAll('.letter')[wordIndex];
-
             letter.classList.remove('current-letter');
-
-
             if (e.key == "Backspace") {
                 deleteCharacter(word)
             }
-
             else {
                 if (!started) {
                     started = true;
                     timer = setInterval(() => {
-
                         seconds--;
                         timeElapsed++
                         secondsDisplay.textContent = seconds;
@@ -54,9 +39,7 @@ document.addEventListener("keydown", e => {
                         if (timeElapsed > 59) {
                             clearInterval(timer);
                         }
-
                     }, 1000)
-
                 }
                 letterCount++;
                 if (e.key == letter.innerHTML) {
@@ -64,29 +47,19 @@ document.addEventListener("keydown", e => {
                 } else {
                     letter.classList.add('incorrect');
                 }
-
-
                 wordIndex++
-
                 if (wordIndex < wordLength) {
                     word.querySelectorAll('.letter')[wordIndex].classList.add('current-letter')
                 }
-
-
                 if (wordIndex >= wordLength) {
                     wordCount++
                     wordCounter.textContent = wordCount;
                     goToNextWord(word)
                 }
-
-
-
             }
             letterCounter.textContent = letterCount;
-
         }
     }
-
     if (e.key == " ") {
         initalise();
     }
@@ -156,4 +129,3 @@ function goToNextWord(word) {
     document.querySelectorAll('.word')[currentWord].classList.add('current-word');
     document.querySelectorAll('.word')[currentWord].querySelectorAll('.letter')[0].classList.add('current-letter');
 }
-
